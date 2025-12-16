@@ -25,6 +25,7 @@ import { Eye, EyeOff, LoaderCircleIcon } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-client";
+import Image from "next/image";
 
 const loginSchema = z.object({
   email: z.email("Please provide a valid email address"),
@@ -66,6 +67,23 @@ export const LoginForm = () => {
     );
   };
 
+  const handleSocialLogin = async (provider: string) => {
+    await signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+      }
+    );
+  };
+
   const isPending = form.formState.isSubmitting;
 
   return (
@@ -87,7 +105,14 @@ export const LoginForm = () => {
                     className="w-full"
                     type="button"
                     disabled={isPending}
+                    onClick={() => handleSocialLogin("github")}
                   >
+                    <Image
+                      src={"/logos/github.svg"}
+                      alt="GitHub"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Github
                   </Button>
                   <Button
@@ -95,7 +120,14 @@ export const LoginForm = () => {
                     className="w-full"
                     type="button"
                     disabled={isPending}
+                    onClick={() => handleSocialLogin("google")}
                   >
+                    <Image
+                      src={"/logos/google.svg"}
+                      alt="Google"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Google
                   </Button>
                 </div>

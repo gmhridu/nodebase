@@ -3,11 +3,7 @@ import { requireUnauth } from "@/lib/auth-utils";
 
 async function LoginPage() {
   await requireUnauth();
-  return (
-    <div>
-      <LoginForm />
-    </div>
-  );
+  return <LoginForm />;
 }
 
 export default LoginPage;

@@ -24,7 +24,8 @@ import { z } from "zod";
 import { Eye, EyeOff, LoaderCircleIcon } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import { signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
+import Image from "next/image";
 
 const registerSchema = z
   .object({
@@ -78,6 +79,24 @@ export const RegisterForm = () => {
     );
   };
 
+  const handleSocialLogin = async (provider: string) => {
+    await signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          router.push("/");
+          toast.success("Logged in successfully!");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+      }
+    );
+  };
+
   const isPending = form.formState.isSubmitting;
 
   return (
@@ -99,7 +118,14 @@ export const RegisterForm = () => {
                     className="w-full"
                     type="button"
                     disabled={isPending}
+                    onClick={() => handleSocialLogin("github")}
                   >
+                    <Image
+                      src={"/logos/github.svg"}
+                      alt="GitHub"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Github
                   </Button>
                   <Button
@@ -107,7 +133,14 @@ export const RegisterForm = () => {
                     className="w-full"
                     type="button"
                     disabled={isPending}
+                    onClick={() => handleSocialLogin("google")}
                   >
+                    <Image
+                      src={"/logos/google.svg"}
+                      alt="Google"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Google
                   </Button>
                 </div>
