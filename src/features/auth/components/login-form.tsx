@@ -95,7 +95,7 @@ export const LoginForm = () => {
             Sign in to your account to continue.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="w-[370px] sm:w-96 px-2">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grid gap-6">
