@@ -108,7 +108,7 @@ export const RegisterForm = () => {
             Sign up to get started with Nodebase.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="w-[370px] sm:w-96 px-2">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grid gap-6">
@@ -232,7 +232,7 @@ export const RegisterForm = () => {
                     {isPending ? (
                       <>
                         <LoaderCircleIcon className="mr-2 animate-spin" />
-                        "Registering..."
+                        Registering...
                       </>
                     ) : (
                       "Sign up"
