@@ -14,11 +14,19 @@ export default function Home() {
   const queryClient = useQueryClient();
   const { data } = useQuery(trpc.getWorkflows.queryOptions());
 
+  const testAi = useMutation(
+    trpc.testAI.mutationOptions({
+      onSuccess: () => {
+        toast.success("AI Test Successfully");
+      },
+    })
+  );
+
   const create = useMutation(
     trpc.createWorkflow.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries(trpc.getWorkflows.queryOptions());
-        toast.success("Workflow Created Successfully")
+        toast.success("Workflow Created Successfully");
       },
     })
   );
@@ -27,6 +35,17 @@ export default function Home() {
     <div className="min-h-screen min-w-screen flex flex-col items-center justify-center gap-y-6">
       protected server component
       <div>{JSON.stringify(data, null, 2)}</div>
+      <Button disabled={testAi.isPending} onClick={() => testAi.mutate()}>
+        {testAi.isPending ? (
+          <>
+            <LoaderCircleIcon className="w-4 h-4 animate-spin" />
+            Generating text...
+          </>
+        ) : (
+          "Generate Text"
+        )}
+      </Button>
+    
       <Button disabled={create.isPending} onClick={() => create.mutate()}>
         {create.isPending ? (
           <>
