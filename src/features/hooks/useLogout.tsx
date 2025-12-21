@@ -14,7 +14,8 @@ export const useLogout = () => {
     await signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/login");
+          router.prefetch("/login");
+          router.replace("/login");
           toast.success("Logged out successfully!");
         },
         onSettled: () => setLoading(false),
