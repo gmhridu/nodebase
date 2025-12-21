@@ -87,7 +87,6 @@ export const RegisterForm = () => {
       },
       {
         onSuccess: () => {
-          router.push("/");
           toast.success("Logged in successfully!");
         },
         onError: (ctx) => {
